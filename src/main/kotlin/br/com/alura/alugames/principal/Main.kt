@@ -5,6 +5,7 @@ import br.com.alura.alugames.servicos.ConsumoApi
 import java.util.Scanner
 
 
+
 fun main() {
     val leitura = Scanner(System.`in`)
     println("Digite um código de jogo para buscar:")
