@@ -7,7 +7,6 @@ import transformarEmIdade
 import java.util.Scanner
 
 
-
 fun main() {
     val leitura = Scanner(System.`in`)
     val gamer = Gamer.criarGamer(leitura)
@@ -55,7 +54,7 @@ fun main() {
         println("Deseja buscar um novo jogo? S/N")
         val resposta = leitura.nextLine()
 
-    } while(resposta.equals("s", ignoreCase = true))
+    } while (resposta.equals("s", ignoreCase = true))
 
     println("Jogos buscados:")
     println(gamer.jogosBuscados)
@@ -77,7 +76,7 @@ fun main() {
 
     println("Deseja excluir algum jogo da lista original? S/N")
     val opcao = leitura.nextLine()
-    if(opcao.equals("s", ignoreCase = true)){
+    if (opcao.equals("s", ignoreCase = true)) {
         println(gamer.jogosBuscados)
         println("\n Informe a posição do jogo que deseja excluir: ")
 

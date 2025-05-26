@@ -3,26 +3,26 @@ package br.com.alura.alugames.modelo
 import java.util.Scanner
 import kotlin.random.Random
 
-data class Gamer(var nome:String, var email:String){
-    var dataNascimento:String? = null
+data class Gamer(var nome: String, var email: String) {
+    var dataNascimento: String? = null
 
-    var usuario:String? = null
+    var usuario: String? = null
         set(value) {
             field = value
-            if (idInterno.isNullOrBlank()){
+            if (idInterno.isNullOrBlank()) {
                 criarIdInterno()
             }
         }
-    var idInterno:String? = null
+    var idInterno: String? = null
         private set
     val jogosBuscados = mutableListOf<Jogo?>()
 
-    constructor(nome: String, email: String, dataNascimento: String, usuario:String):
-            this(nome, email){
-                this.dataNascimento = dataNascimento
-                this.usuario = usuario
-                criarIdInterno()
-            }
+    constructor(nome: String, email: String, dataNascimento: String, usuario: String) :
+            this(nome, email) {
+        this.dataNascimento = dataNascimento
+        this.usuario = usuario
+        criarIdInterno()
+    }
 
 
 //    init{
@@ -43,16 +43,18 @@ data class Gamer(var nome:String, var email:String){
         idInterno = "$usuario#$tag"
     }
 
-    fun validarEmail(): String{
+    fun validarEmail(): String {
         val regex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
-        if(regex.matches(email)){
+        if (regex.matches(email)) {
             return email
-        } else{
+        } else {
             throw IllegalArgumentException("Email inválido")
         }
     }
 
-    // Código suprimido
+    fun alugaJogo(jogo: Jogo): Aluguel{
+        return Aluguel(this, jogo)
+    }
 
     companion object {
         fun criarGamer(leitura: Scanner): Gamer {
@@ -71,7 +73,7 @@ data class Gamer(var nome:String, var email:String){
 
                 return Gamer(nome, email, nascimento, usuario)
             } else {
-                return Gamer (nome, email)
+                return Gamer(nome, email)
             }
 
         }
