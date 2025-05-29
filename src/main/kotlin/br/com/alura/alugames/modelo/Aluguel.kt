@@ -3,9 +3,8 @@ package br.com.alura.alugames.modelo
 data class Aluguel(
     val gamer: Gamer,
     val jogo: Jogo,
-    val periodo: Periodo
-) {
-    val valorDoAluguel: Double = jogo.preco * periodo.emDias
+    val periodo: Periodo) {
+    val valorDoAluguel = gamer.plano.obterValor(this)
 
 
     override fun toString(): String {

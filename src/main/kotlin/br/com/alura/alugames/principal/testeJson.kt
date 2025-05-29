@@ -1,6 +1,7 @@
 package br.com.alura.alugames.principal
 
 import br.com.alura.alugames.modelo.Periodo
+import br.com.alura.alugames.modelo.PlanoAssinatura
 import br.com.alura.alugames.servicos.ConsumoApi
 import java.time.LocalDate
 
@@ -31,4 +32,12 @@ fun main() {
     gamerCamila.alugaJogo(jogoSpider, periodo4)
 
     println(gamerCamila.jogosDoMes(5))
+
+    val gamerGuilherme = listaGamers.get(2)
+    gamerGuilherme.plano = PlanoAssinatura("PRATA", 9.90, 3)
+
+    gamerGuilherme.alugaJogo(jogoREVillage, periodo1)
+    gamerGuilherme.alugaJogo(jogoSpider, periodo2)
+    gamerGuilherme.alugaJogo(jogoTLOU, periodo3)
+    println(gamerGuilherme.jogosAlugados)
 }
