@@ -3,40 +3,59 @@ package br.com.alura.alugames.modelo
 import java.time.LocalDate
 import java.util.Scanner
 import kotlin.random.Random
+import br.com.alura.alugames.utilitario.formatoComDuasCasasDecimais
 
-data class Gamer(var nome: String, var email: String) {
-    var dataNascimento: String? = null
-
-    var usuario: String? = null
+data class Gamer(var nome:String, var email:String): Recomendavel {
+    var dataNascimento:String? = null
+    var usuario:String? = null
         set(value) {
             field = value
-            if (idInterno.isNullOrBlank()) {
+            if(idInterno.isNullOrBlank()) {
                 criarIdInterno()
             }
         }
-    var idInterno: String? = null
+    var idInterno:String? = null
         private set
     var plano: Plano = PlanoAvulso("BRONZE")
     val jogosBuscados = mutableListOf<Jogo?>()
     val jogosAlugados = mutableListOf<Aluguel>()
+    private val listaNotas = mutableListOf<Int>()
+    val jogosRecomendados = mutableListOf<Jogo>()
 
-    constructor(nome: String, email: String, dataNascimento: String, usuario: String) :
+    override val media: Double
+        get() = listaNotas.average().formatoComDuasCasasDecimais()
+
+    override fun recomendar(nota: Int) {
+        listaNotas.add(nota)
+    }
+
+    fun recomendarJogo(jogo: Jogo, nota: Int) {
+        jogo.recomendar(nota)
+        jogosRecomendados.add(jogo)
+    }
+
+    constructor(nome: String, email: String, dataNascimento:String, usuario:String):
             this(nome, email) {
         this.dataNascimento = dataNascimento
         this.usuario = usuario
         criarIdInterno()
     }
 
-
-//    init{
-//        if (nome.isNullOrBlank()){
-//            throw IllegalArgumentException("Nome está em branco.")
-//        }
-//        this.email = validarEmail()
-//    }
+    init {
+        if (nome.isNullOrBlank()) {
+            throw IllegalArgumentException("Nome está em branco")
+        }
+        this.email = validarEmail()
+    }
 
     override fun toString(): String {
-        return "Gamer(nome='$nome', email='$email', dataNascimento=$dataNascimento, usuario=$usuario, idInterno=$idInterno)"
+        return "Gamer:\n" +
+                "Nome: $nome\n" +
+                "Email: $email\n" +
+                "Data Nascimento: $dataNascimento\n" +
+                "Usuario: $usuario\n" +
+                "IdInterno: $idInterno\n" +
+                "Reputação: $media"
     }
 
     fun criarIdInterno() {
@@ -62,10 +81,10 @@ data class Gamer(var nome: String, var email: String) {
         return aluguel
     }
 
-    fun jogosDoMes(mes: Int): List<Jogo> {
+    fun jogosDoMes(mes:Int): List<Jogo> {
         return jogosAlugados
-            .filter { aluguel -> aluguel.periodo.dataInicial.monthValue == mes }
-            .map { aluguel -> aluguel.jogo }
+            .filter { aluguel ->  aluguel.periodo.dataInicial.monthValue == mes}
+            .map { aluguel ->  aluguel.jogo}
     }
 
     companion object {
@@ -85,11 +104,10 @@ data class Gamer(var nome: String, var email: String) {
 
                 return Gamer(nome, email, nascimento, usuario)
             } else {
-                return Gamer(nome, email)
+                return Gamer (nome, email)
             }
 
         }
     }
 
 }
-
